@@ -5,6 +5,16 @@ containerP = document.getElementById("current-location");
 document.addEventListener("DOMContentLoaded", sendAPIRequest);
 
 //functions
+function toDegreesMinutesAndSeconds(coordinate) {
+    var absolute = Math.abs(coordinate);
+    var degrees = Math.floor(absolute);
+    var minutesNotTruncated = (absolute - degrees) * 60;
+    var minutes = Math.floor(minutesNotTruncated);
+    var seconds = Math.floor((minutesNotTruncated - minutes) * 60);
+
+    return degrees + "°" + minutes + "'" + seconds + '"';
+}
+
 function sendAPIRequest() {
     var request = new XMLHttpRequest();
 
@@ -12,9 +22,6 @@ function sendAPIRequest() {
 
     request.onload = function () {
         var data = JSON.parse(this.response);
-
-        longitude = data.longitude;
-        latitude = data.latitude;
 
         let unix_timestamp = data.timestamp;
 
@@ -25,16 +32,25 @@ function sendAPIRequest() {
 
         var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
-        createMap(data.longitude, data.latitude);
+        createMap(data.latitude, data.longitude);
 
-        containerP.innerText = `Longitude: ${data.longitude}\nLatitude ${data.latitude}\nLocal time: ${formattedTime}`
+        var latitude = toDegreesMinutesAndSeconds(data.latitude);
+        var latitudeCardinal = data.latitude >= 0 ? "N" : "S";
+
+        var longitude = toDegreesMinutesAndSeconds(data.longitude);
+        var longitudeCardinal = data.longitude >= 0 ? "E" : "W";
+
+        //return latitude + " " + latitudeCardinal + "\n" + longitude + " " + longitudeCardinal;
+
+        //containerP.innerText = `Latitude: ${data.latitude}\nLongitude ${data.longitude}\nLocal time: ${formattedTime}`
+        containerP.innerText = `Latitude: ${latitude + " " + latitudeCardinal}\nLongitude: ${longitude + " " + longitudeCardinal}\nLocal time: ${formattedTime}`
     }
 
     request.send();
 }
 
-function createMap(long, lat) {
-    var mymap = L.map("map").setView([long, lat], 5);
+function createMap(lat, long) {
+    var mymap = L.map("map").setView([lat, long], 5);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
         maxZoom: 18,
@@ -46,7 +62,7 @@ function createMap(long, lat) {
         zoomOffset: -1
     }).addTo(mymap);
 
-    var marker = L.marker([long, lat]).addTo(mymap);
+    var marker = L.marker([lat, long]).addTo(mymap);
 
     marker.bindPopup("International Space Station").openPopup();
 }
