@@ -1,2 +1,5 @@
-# iss_tracker
- International Space Station tracker with the ISS API
+# ISS Tracker
+ Track the ISS live!
+ 
+ Example:
+ ![ISS Tracker example image](example_images/example.png)
