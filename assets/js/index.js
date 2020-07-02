@@ -23,6 +23,7 @@ function sendAPIRequest() {
     request.onload = function () {
         var data = JSON.parse(this.response);
 
+        // converting and formatting timestamp
         let unix_timestamp = data.timestamp;
 
         var date = new Date(unix_timestamp * 1000);
@@ -32,18 +33,16 @@ function sendAPIRequest() {
 
         var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
-        createMap(data.latitude, data.longitude);
-
+        // formatting latitude and longitude
         var latitude = toDegreesMinutesAndSeconds(data.latitude);
         var latitudeCardinal = data.latitude >= 0 ? "N" : "S";
 
         var longitude = toDegreesMinutesAndSeconds(data.longitude);
         var longitudeCardinal = data.longitude >= 0 ? "E" : "W";
 
-        //return latitude + " " + latitudeCardinal + "\n" + longitude + " " + longitudeCardinal;
+        createMap(data.latitude, data.longitude);
 
-        //containerP.innerText = `Latitude: ${data.latitude}\nLongitude ${data.longitude}\nLocal time: ${formattedTime}`
-        containerP.innerText = `Latitude: ${latitude + " " + latitudeCardinal}\nLongitude: ${longitude + " " + longitudeCardinal}\nLocal time: ${formattedTime}`
+        containerP.innerText = `Latitude: ${latitude + " " + latitudeCardinal}\nLongitude: ${longitude + " " + longitudeCardinal}\n${formattedTime + " " + Intl.DateTimeFormat().resolvedOptions().timeZone}`
     }
 
     request.send();
