@@ -1,11 +1,35 @@
 //selectors
+containerP = document.getElementById("current-location");
 
 //listeners
-document.addEventListener("DOMContentLoaded", createMap);
+document.addEventListener("DOMContentLoaded", sendAPIRequest);
 
 //functions
-function createMap() {
-    var mymap = L.map("map").setView([-47.36999493, 151.738540034], 5);
+function sendAPIRequest() {
+    var request = new XMLHttpRequest();
+
+    request.open("GET", "https://api.wheretheiss.at/v1/satellites/25544", true);
+
+    request.onload = function () {
+        var data = JSON.parse(this.response);
+
+        console.log(data);
+
+        longitude = data.longitude;
+        latitude = data.latitude;
+
+        console.log(latitude, longitude)
+
+        createMap(data.longitude, data.latitude);
+
+        containerP.innerText = `Longitude: ${data.longitude}\nLatitude ${data.latitude}`
+    }
+
+    request.send();
+}
+
+function createMap(long, lat) {
+    var mymap = L.map("map").setView([long, lat], 5);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
         maxZoom: 18,
@@ -16,4 +40,8 @@ function createMap() {
         tileSize: 512,
         zoomOffset: -1
     }).addTo(mymap);
+
+    var marker = L.marker([long, lat]).addTo(mymap);
+
+    marker.bindPopup("International Space Station").openPopup();
 }

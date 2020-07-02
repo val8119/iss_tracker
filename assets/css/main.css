@@ -4,19 +4,35 @@
     font-family: 'Poppins', sans-serif;
 }
 
+html {
+    height: 100%;
+}
+
+body {
+    background: rgb(238, 174, 202);
+    background: linear-gradient(135deg, #4fbe90 0%, #80abdd 100%);
+    overflow: hidden;
+}
+
 .container {
     margin: 5vh auto 0 auto;
     text-align: center;
 }
 
 .container header {
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.40);
     font-weight: bold;
     font-size: 3em;
+}
+
+.container p {
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.40);
 }
 
 #map {
     margin: 3vh auto 0 auto;
     width: 600px;
     height: 400px;
-    box-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.40);
+    border-radius: 10px;
 }
