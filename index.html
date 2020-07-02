@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css">
+    <script src="assets/particles/particles.js"></script>
 
     <!-- leaflet map js and css -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -19,14 +20,19 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="text-cont">
-            <header id="header">ISS Tracker</header>
-            <p id="current-location">Current location (long, lat): -47.36999493, 151.738540034</p>
+    <div id="particles-js">
+        <div class="container">
+            <div class="text-cont">
+                <header id="header">ISS Tracker</header>
+                <p id="current-location">Current location (long, lat): -47.36999493, 151.738540034</p>
+            </div>
+            <div id="map"></div>
         </div>
-        <div id="map"></div>
     </div>
     <script src="assets/js/index.js"></script>
+    <script>
+        particlesJS.load("particles-js", "assets/particles/particles-cfg.json");
+    </script>
 </body>
 
 </html>

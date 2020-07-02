@@ -9,9 +9,14 @@ html {
 }
 
 body {
-    background: rgb(238, 174, 202);
-    background: linear-gradient(135deg, #4fbe90 0%, #80abdd 100%);
+    background: #161822;
+    background: linear-gradient(135deg, #1d2130 0%, #161822 100%);
     overflow: hidden;
+}
+
+#particles-js {
+    min-width: 100vh;
+    height: auto;
 }
 
 .container {
@@ -20,13 +25,15 @@ body {
 }
 
 .container header {
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.40);
+    color: #f0f8ff;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
     font-weight: bold;
     font-size: 3em;
 }
 
 .container p {
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.40);
+    color: aliceblue;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
 }
 
 #map {
